@@ -10,5 +10,6 @@ public:
 	ReadBMP(char *dateiPfad);
 	~ReadBMP();
 	static unsigned char ** bmp2Array(char *dateiPfad);
+	Bild * getBild();
 };
 #endif //readBMP_h

@@ -17,20 +17,24 @@ unsigned char ** ReadBMP::bmp2Array(char *dateiPfad){
 		exit(0);
 	}
 
-	for (int idx = 0; idx<54; idx++) std::cout << getc(streamIn);  // strip out BMP header
-	unsigned char ** rueckgabeArray = new unsigned char *[(int)(Bild::bildHoehe / Bild::anzahlPanel)];
-	for (int idy = (int)(Bild::bildHoehe/Bild::anzahlPanel) - 1; idy >= 0; idy--) {    // Reihen von unten nach oben
+	for (int idx = 0; idx<54; idx++) getc(streamIn);  // strip out BMP header
+	unsigned char ** rueckgabeArray = new unsigned char *[(int)(Bild::bildHoehe / Bild::anzahlPanel)]; //Erste Dimension des Arrays
+	for (int idy = (int)(Bild::bildHoehe / Bild::anzahlPanel) - 1; idy >= 0; idy--) {    // Reihen von unten nach oben
 		rueckgabeArray[idy] = new unsigned char[Bild::bildBreite];
-		for (int idx = 0; idx<Bild::bildBreite; idx++) {    ///Spalten von links nach rechts
-			rueckgabeArray[idy][idx] = 0;
-			for (int panelwahl = 1; panelwahl < 16; panelwahl *=2) { //Schleife wird 4mal durchlaufen 2^4=2^Bild::anzahlPanel ->16
+	}
+	for(unsigned char bitwahl=128; bitwahl; bitwahl >>=2){ //wahlt das bit und damit das panel aus
+		for (int idy = (int)(Bild::bildHoehe/Bild::anzahlPanel) - 1; idy >= 0; idy--) {    // Reihen von unten nach oben
+			for (int idx = 0; idx<Bild::bildBreite; idx++) {    ///Spalten von links nach rechts
 				getc(streamIn); //Blau wird nicht verwendet
-				rueckgabeArray[idy][idx] += (unsigned char)(panelwahl*(bool)(getc(streamIn) / divisorGruen)); //Gruen
-				rueckgabeArray[idy][idx] += (unsigned char)(panelwahl*(bool)(getc(streamIn) / divisorRot) * 2); //Rot
+				rueckgabeArray[idy][idx] |= bitwahl & (255*(int)(getc(streamIn) / divisorGruen)); //Gruen
+				rueckgabeArray[idy][idx] |= (bitwahl >> 1) & (255*(int)(getc(streamIn) / divisorRot)); //Rot
+				//cout << (int)bitwahl << "\t" << idy << "\t" << idx << "\t" << (getc(streamIn) / divisorGruen) << endl;
 			}
-			
-			}
+		}
 	}
 	fclose(streamIn);
 	return rueckgabeArray;
+}
+Bild * ReadBMP::getBild() {
+	return this->neuesBild;
 }

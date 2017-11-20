@@ -24,15 +24,15 @@ using namespace std;
 		// erzeugt array ohne inhalt
 		Bild::Bild(){
 			this->bildPixel = new unsigned char *[(int)Bild::bildHoehe/ Bild::anzahlPanel];
-			for (int idx = 0; idx<(int)(Bild::bildHoehe / Bild::anzahlPanel); idx++) {
-				this->bildPixel[idx] = new unsigned char[Bild::bildBreite];
+			for (int idy = 0; idy<(int)(Bild::bildHoehe / Bild::anzahlPanel); idy++) {
+				this->bildPixel[idy] = new unsigned char[Bild::bildBreite];
 			}
 			this->setupGPIO();
 		}
 		Bild::Bild(unsigned char ** vorhandenesArray) {
 			this->bildPixel = vorhandenesArray;
 			this->setupGPIO();
-			this->bild2SPI();
+			//this->bild2SPI();
 		}
 		// erzeugt für 1 gelbes Bild (nur 1) und für 0 schwarzes Bild
 		Bild::Bild(Farbe schwarzweiss){
@@ -44,7 +44,7 @@ using namespace std;
 				}
 			}
 			this->setupGPIO();
-			this->bild2SPI();
+			//this->bild2SPI();
 		}
 
 		//löscht Array
@@ -61,7 +61,7 @@ using namespace std;
 		int Bild::bild2SPI(){
 			for (int idx = 0; idx<(int)(Bild::bildHoehe / Bild::anzahlPanel); idx++) {
 				for (int idx2 = 0; idx2<Bild::bildBreite; idx2++) {
-					cout << wiringPiSPIDataRW(0, &(bildPixel[idx][idx2]), 1) << endl; //int wiringPiSPIDataRW (int channel, unsigned char *data, int len) ;
+					wiringPiSPIDataRW(0, &(bildPixel[idx][idx2]), 1); //int wiringPiSPIDataRW (int channel, unsigned char *data, int len) ;
 					//delay(500);
 				}
 			}
