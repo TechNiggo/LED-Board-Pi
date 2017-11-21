@@ -26,8 +26,8 @@ unsigned char ** ReadBMP::bmp2Array(char *dateiPfad){
 		for (int idy = (int)(Bild::bildHoehe/Bild::anzahlPanel) - 1; idy >= 0; idy--) {    // Reihen von unten nach oben
 			for (int idx = 0; idx<Bild::bildBreite; idx++) {    ///Spalten von links nach rechts
 				getc(streamIn); //Blau wird nicht verwendet
-				rueckgabeArray[idy][idx] |= bitwahl & (255*(int)(getc(streamIn) / divisorGruen)); //Gruen
-				rueckgabeArray[idy][idx] |= (bitwahl >> 1) & (255*(int)(getc(streamIn) / divisorRot)); //Rot
+				rueckgabeArray[idy][idx] |= (bitwahl >> 1) & (255*(int)(getc(streamIn) / divisorGruen)); //Gruen
+				rueckgabeArray[idy][idx] |= bitwahl & (255*(int)(getc(streamIn) / divisorRot)); //Rot
 				//cout << (int)bitwahl << "\t" << idy << "\t" << idx << "\t" << (getc(streamIn) / divisorGruen) << endl;
 			}
 		}

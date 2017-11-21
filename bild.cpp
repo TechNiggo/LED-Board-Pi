@@ -32,19 +32,19 @@ using namespace std;
 		Bild::Bild(unsigned char ** vorhandenesArray) {
 			this->bildPixel = vorhandenesArray;
 			this->setupGPIO();
-			//this->bild2SPI();
+			this->bild2SPI();
 		}
 		// erzeugt für 1 gelbes Bild (nur 1) und für 0 schwarzes Bild
-		Bild::Bild(Farbe schwarzweiss){
+		Bild::Bild(Farbe bildhintergrund){
 			this->bildPixel = new unsigned char *[(int)Bild::bildHoehe/ Bild::anzahlPanel];
 			for(int idx=0;idx<(int)(Bild::bildHoehe/ Bild::anzahlPanel); idx++){
 				this->bildPixel[idx] = new unsigned char[bildBreite];
 				for(int idx2=0;idx2<Bild::bildBreite;idx2++){
-					this->bildPixel[idx][idx2]=0xFF*(int)schwarzweiss;
+					this->bildPixel[idx][idx2]=0b01010101*(int)bildhintergrund;
 				}
 			}
 			this->setupGPIO();
-			//this->bild2SPI();
+			this->bild2SPI();
 		}
 
 		//löscht Array
@@ -59,10 +59,11 @@ using namespace std;
 		
 		//sendet das Bild zum FPGA
 		int Bild::bild2SPI(){
-			for (int idx = 0; idx<(int)(Bild::bildHoehe / Bild::anzahlPanel); idx++) {
-				for (int idx2 = 0; idx2<Bild::bildBreite; idx2++) {
-					wiringPiSPIDataRW(0, &(bildPixel[idx][idx2]), 1); //int wiringPiSPIDataRW (int channel, unsigned char *data, int len) ;
-					//delay(500);
+			digitalWrite(Bild::pin_resync, HIGH); delay(Bild::delay_pin_resync);
+			digitalWrite(Bild::pin_resync, LOW);
+			for (int idy = 0; idy < (int)(Bild::bildHoehe / Bild::anzahlPanel); idy++) {
+				for (int idx = 0; idx < Bild::bildBreite; idx++) {
+					wiringPiSPIDataRW(0, &(bildPixel[idy][idx]), 1); //int wiringPiSPIDataRW (int channel, unsigned char *data, int len) ;
 				}
 			}
 			return 1;
@@ -72,5 +73,7 @@ using namespace std;
 		int Bild::setupGPIO(){
 			wiringPiSetup ();
 			wiringPiSPISetup(0, Bild::spispeed);
+			pinMode(Bild::pin_resync, OUTPUT);
+			digitalWrite(Bild::pin_resync, LOW);
 			return 1;
 		}

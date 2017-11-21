@@ -10,6 +10,7 @@ int AnzeigeWeb::bild2html(Bild* bild) {
 			cout << "</tr>"<<endl;
 		}
 	}
+	cout << "<tr></tr>" << endl;
 	return 1;
 }
 AnzeigeWeb::AnzeigeWeb() {
