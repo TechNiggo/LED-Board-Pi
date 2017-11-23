@@ -35,9 +35,9 @@ class Bild {
 		static int const bildHoehe = 32;
 		static int const anzahlPanel = 4;
 	private:
-		static int const spispeed = 1;
+		static int const spispeed = 12000000;
 		static int const pin_resync = 6;
-		static int const delay_pin_resync = 1;
+		static int const delay_pin_resync = 10;
 	public:
 		unsigned char ** bildPixel; //bildpixel[32/4][176]
 		Bild(); // erzeugt array ohne inhalt

@@ -17,6 +17,7 @@
 	
 	*/
 #include "bild.h"
+#include "anzeigeWeb.h"
 #define ARRAY_SIZE(a) (sizeof(a) / sizeof((a)[0]))
 #include <iostream>
 using namespace std;
@@ -27,12 +28,13 @@ using namespace std;
 			for (int idy = 0; idy<(int)(Bild::bildHoehe / Bild::anzahlPanel); idy++) {
 				this->bildPixel[idy] = new unsigned char[Bild::bildBreite];
 			}
-			this->setupGPIO();
+			//this->setupGPIO();
 		}
 		Bild::Bild(unsigned char ** vorhandenesArray) {
 			this->bildPixel = vorhandenesArray;
-			this->setupGPIO();
-			this->bild2SPI();
+			//AnzeigeWeb::bild2html(this);
+			//this->setupGPIO();
+			//this->bild2SPI();
 		}
 		// erzeugt für 1 gelbes Bild (nur 1) und für 0 schwarzes Bild
 		Bild::Bild(Farbe bildhintergrund){
@@ -43,8 +45,8 @@ using namespace std;
 					this->bildPixel[idx][idx2]=0b01010101*(int)bildhintergrund;
 				}
 			}
-			this->setupGPIO();
-			this->bild2SPI();
+			//this->setupGPIO();
+			//this->bild2SPI();
 		}
 
 		//löscht Array
@@ -59,13 +61,16 @@ using namespace std;
 		
 		//sendet das Bild zum FPGA
 		int Bild::bild2SPI(){
-			digitalWrite(Bild::pin_resync, HIGH); delay(Bild::delay_pin_resync);
-			digitalWrite(Bild::pin_resync, LOW);
 			for (int idy = 0; idy < (int)(Bild::bildHoehe / Bild::anzahlPanel); idy++) {
 				for (int idx = 0; idx < Bild::bildBreite; idx++) {
 					wiringPiSPIDataRW(0, &(bildPixel[idy][idx]), 1); //int wiringPiSPIDataRW (int channel, unsigned char *data, int len) ;
 				}
 			}
+			digitalWrite(Bild::pin_resync, HIGH); delayMicroseconds(Bild::delay_pin_resync);
+			//digitalWrite(14, HIGH);
+			//digitalWrite(14, LOW);
+			digitalWrite(Bild::pin_resync, LOW);
+			cout <<	 "Bild gesendet" << endl;
 			return 1;
 		}
 		
@@ -74,6 +79,7 @@ using namespace std;
 			wiringPiSetup ();
 			wiringPiSPISetup(0, Bild::spispeed);
 			pinMode(Bild::pin_resync, OUTPUT);
+			//pinMode(14, OUTPUT); //SPI_CLOCK
 			digitalWrite(Bild::pin_resync, LOW);
 			return 1;
 		}

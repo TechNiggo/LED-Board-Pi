@@ -2,20 +2,23 @@
 #include "readBMP.h"
 #include "anzeigeWeb.h"
 int main(){
-	Bild * bild1 = new Bild(schwarz);
-	Bild * bild3 = new Bild(gelb);
-	Bild * bild4 = new Bild(schwarz);
+	//Bild * bild1 = new Bild(schwarz);
+	//Bild * bild3 = new Bild(gelb);
+	//Bild * bild4 = new Bild(schwarz);
+	Bild::setupGPIO();
 	ReadBMP * bild2 = new ReadBMP("/var/www/html/medien/aktuell.bmp");
-	AnzeigeWeb::bild2html(bild1);
-	AnzeigeWeb::bild2html(bild3);
-	AnzeigeWeb::bild2html(bild4);
+	//AnzeigeWeb::bild2html(bild1);
+	//AnzeigeWeb::bild2html(bild3);
+	//AnzeigeWeb::bild2html(bild4);
+	//bild2->getBild()->bild2SPI();
+	//AnzeigeWeb::bild2html(bild2->getBild());
+	for (int idx = 0; idx < 1000; idx++)
+		bild2->getBild()->bild2SPI();
+	//delete bild1;
 	AnzeigeWeb::bild2html(bild2->getBild());
-	for (int idx = 0; idx < 800; idx++) {
-		bild1->bild2SPI();
-	}
-	delete bild1;
+	cout << millis() << endl;
 	delete bild2;
-	delete bild3;
-	delete bild4;
+	//delete bild3;
+	//delete bild4;
 	return 0;
 }
