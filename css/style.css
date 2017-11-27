@@ -1,0 +1,32 @@
+body {
+	text-align: center;
+}
+#outer-wrapper {
+	margin: 0 15px;
+	padding: 0 2%;
+	max-width: 95%;
+	//background: #f00;
+}
+#wrapper {
+	margin: 0 auto;
+	padding-top: 1em;
+	//background: #0f0;
+}
+#anzeige table {
+	background: #444;
+	margin: 0 auto;
+}
+#anzeige table td {
+    /*box-shadow: 1px 1px 0px #bbb;*/
+}
+#anzeige div {
+	/*margin: 2px 0;*/
+	display: inline-block;
+	color: rgba(0,0,0,0);
+	font-size: 9px;
+	float: left;
+}
+h1	{
+	font-size: 60px;
+	margin: 0 auto 0.7em auto;
+}

@@ -11,5 +11,6 @@ public:
 	~ReadBMP();
 	static unsigned char ** bmp2Array(char *dateiPfad);
 	Bild * getBild();
+	static int string2int(char eingabe[14], int len);
 };
 #endif //readBMP_h

@@ -27,6 +27,8 @@ Version		Datum		Bearbeiter			Bearbeitungsgrund
 class Text2LED {
 private:
 	char text[12];
+	//static unsigned char ** alphabet;
+	static int ** letter_pos;
 public:
 	Text2LED(char text[], int len);
 	~Text2LED();
