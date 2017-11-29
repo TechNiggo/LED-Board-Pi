@@ -27,12 +27,20 @@ Version		Datum		Bearbeiter			Bearbeitungsgrund
 class Text2LED {
 private:
 	char text[12];
-	//static unsigned char ** alphabet;
-	static int ** letter_pos;
-public:
-	Text2LED(char text[], int len);
-	~Text2LED();
+	static unsigned char ** alphabet;
+	static int const anfangersterBuchstabe = 5;
+	static int const laengeBuchstabe = 15;
+	static int const anzahlBuchstaben = 3;
+	static int const alphabetLaenge = 2500;
+	static int const leerzeichenPixel = 1; //anzhal der Pixel zwischen zwei Zeichen
 	Bild * meinBild;
+	int letter2bild(char letter); // setzt einen Buchstaben ans ende des Textes
+	int pos; // ende (x-pos) des letzten Buchtabens
+	public:
+	Text2LED(const char text[]);
+	~Text2LED();
 	static int setupAlphabet();
+	static int exitAlphabet();
+	Bild * getBild();
 };
 #endif //text_h

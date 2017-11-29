@@ -54,13 +54,13 @@ using namespace std;
 		}
 		
 		//sendet das Bild zum FPGA
-		int Bild::bild2SPI(){
+		int Bild::bild2SPI(int beginn){
 			for (int idy = 0; idy < (int)(Bild::bildHoehe / Bild::anzahlPanel); idy++) {
 				for (int idx = 0; idx < Bild::bildBreite; idx++) {
 					wiringPiSPIDataRW(0, &(bildPixel[idy][idx]), 1); //int wiringPiSPIDataRW (int channel, unsigned char *data, int len) ;
 				}
 			}
-			cout <<	 "Bild gesendet" << endl;
+			//cout <<	 "Bild gesendet" << endl;
 			digitalWrite(Bild::pin_resync, HIGH); delay(20); digitalWrite(Bild::pin_resync, LOW); //Toggelt SRAM Baustein, nachdem ein Bild fertig gesendet wurde
 			return 1;
 		}

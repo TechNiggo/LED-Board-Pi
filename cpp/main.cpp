@@ -1,25 +1,27 @@
 #include "bild.h"
 #include "readBMP.h"
 #include "anzeigeWeb.h"
-int main(){
-	//Bild * bild1 = new Bild(schwarz);
-	Bild * bild3 = new Bild(gruen);
-	//Bild * bild4 = new Bild(schwarz);
+#include "text.h"
+int main(int argc, char* argv[]){
+	Text2LED::setupAlphabet();
 	Bild::setupGPIO();
-	ReadBMP * bild2 = new ReadBMP("/var/www/html/medien/upload/aktuell.bmp");
-	//AnzeigeWeb::bild2html(bild1);
-	//AnzeigeWeb::bild2html(bild3);
-	//AnzeigeWeb::bild2html(bild4);
-	//bild2->getBild()->bild2SPI();
-	//AnzeigeWeb::bild2html(bild2->getBild());
-	//for (int idx = 0; idx < 459; idx++)
-		//bild3->bild2SPI();
-		bild2->getBild()->bild2SPI();
-	//delete bild1;
-	AnzeigeWeb::bild2html(bild2->getBild());
+	cout << argc << endl;
+	if (argc == 2) {
+		char* text = &(argv[2][0]);
+		Text2LED * textBild = new Text2LED("Siemens");
+		AnzeigeWeb::bild2html(textBild->getBild());
+		textBild->getBild()->bild2SPI();
+		AnzeigeWeb::bild2html(textBild->getBild());
+		delete textBild;
+	}
+	else {
+		Bild * bild3 = new Bild(gruen);
+		ReadBMP * bild2 = new ReadBMP((char*)"/var/www/html/medien/upload/aktuell.bmp");
+
+		delete bild2;
+		delete bild3;
+	}
 	cout << millis() << endl;
-	delete bild2;
-	delete bild3;
-	//delete bild4;
+	Text2LED::exitAlphabet();
 	return 0;
 }

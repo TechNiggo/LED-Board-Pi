@@ -36,7 +36,7 @@ class Bild {
 		static int const anzahlPanel = 4;
 		static int const panelReihen = (int)(Bild::bildHoehe / Bild::anzahlPanel);
 	private:
-		static int const spispeed = 12000000;
+		static int const spispeed = 1000000;
 		static int const pin_resync = 6;
 		static int const delay_pin_resync = 10;
 	public:
@@ -45,7 +45,7 @@ class Bild {
 		Bild(unsigned char ** vorhandenesArray); // erzeugt array ohne inhalt
 		Bild(Farbe bildhintergrund); // erzeugt für 3 gelbes Bild (nur 1), für 2 gruen, für 1 rot und für 0 schwarzes Bild
 		~Bild(); //löscht Array
-		int bild2SPI(); //sendet das Bild zum FPGA
+		int bild2SPI(int beginn=0); //sendet das Bild zum FPGA
 		static int setupGPIO(); //konfiguration für GPIO ausgabe
 };
 #endif // !bild_h

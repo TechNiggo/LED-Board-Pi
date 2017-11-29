@@ -1,7 +1,4 @@
 <?php
-
-
 	
-	//echo shell_exec('../C/compile.sh');
-	echo shell_exec('../main');
+	echo shell_exec("/var/www/html/led/cpp/main Hallo");
 ?>
