@@ -7,7 +7,7 @@ ReadBMP::~ReadBMP() {
 	delete neuesBild; //Löscht das Bild
 }
 
-unsigned char ** ReadBMP::bmp2Array(char *dateiPfad){
+unsigned char ** ReadBMP::bmp2Array(char *dateiPfad, int bildBreite){
 	int const divisorRot = 128;
 	int const divisorGruen = 69;
 	FILE * streamIn = fopen(dateiPfad, "r"); //BMP-Datei wird geöffnet (nur Leseberechtigungen)
@@ -18,7 +18,7 @@ unsigned char ** ReadBMP::bmp2Array(char *dateiPfad){
 	char header[70];
 	for (int idx = 0; idx < 54; idx++) header[idx] = getc(streamIn);  // strip out BMP header //66775666000000540004000017600032000102400000266001951400195140000000000 18:176->22:32
 	int bildHoehe = (int)header[22]; //Bildhöhe wird aus header gelesen
-	int bildBreite = (int)header[18]; //Bildbreite wird aus header gelesen
+	//int bildBreite = (int)header[18]; //Bildbreite wird aus header gelesen
 	unsigned char ** rueckgabeArray = new unsigned char *[(int)(bildHoehe / Bild::anzahlPanel)]; //Erste Dimension des Arrays
 	for (int idy = 0; idy < (int)(bildHoehe / Bild::anzahlPanel); idy++) {    // Reihen von unten nach oben
 		rueckgabeArray[idy] = new unsigned char[bildBreite];

@@ -9,7 +9,7 @@ private:
 public:
 	ReadBMP(char *dateiPfad);
 	~ReadBMP();
-	static unsigned char ** bmp2Array(char *dateiPfad);
+	static unsigned char ** bmp2Array(char *dateiPfad, int bildBreite=176);
 	Bild * getBild();
 	static int string2int(char eingabe[14], int len);
 };

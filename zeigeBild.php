@@ -16,6 +16,6 @@
 </style>
 <table>
 <?php
-	echo shell_exec("/var/www/html/led/cpp/main");
+	include("./php/bild.php");
 ?>
 </table>
